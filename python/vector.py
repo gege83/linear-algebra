@@ -86,3 +86,30 @@ class Vector(object):
     def projectToOrth(self, base):
         return self-self.projectTo(base)
 
+    def crossProduct(self, base):
+        try :
+            x1, y1, z1= self.coordinates
+            x2, y2, z2= base.coordinates
+            return Vector([y1*z2-y2*z1, -(x1*z2-x2*z1), x1*y2-x2*y1])
+        except ValueError as e:
+            msg = str(e)
+            if msg == 'need more than 2 values to unpack':
+                v1 = Vector(self.coordiantes + ('0',))
+                v2 = Vector(base.coordiantes + ('0',))
+                return v1.crossProduct(v2)
+            elif (msg == 'need more than 1 values to unpack' or 
+                  msg == 'too many values to unpack'):
+                raise Exception("nem feldogozhato")
+            else:
+                raise e
+
+    def paralelogramArea(self, base):
+        vector1 = self
+        vector2 = base
+        
+        return vector1.crossProduct(vector2).length();
+
+    def triangleArea(self, base):
+        return self.paralelogramArea(base)/2
+
+

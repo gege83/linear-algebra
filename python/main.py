@@ -41,3 +41,17 @@ print v2.projectTo(w2).isOrthogonal(v2.projectToOrth(w2))
 
 print v3.projectTo(w3)
 print v3.projectToOrth(w3)
+
+v1 = Vector([8.462, 7.893, -8.187])
+w1 = Vector([6.984, -5.975, 4.778])
+
+v2 = Vector([-8.987, -9.838, 5.031])
+w2 = Vector([-4.268, -1.861, -8.866])
+
+v3 = Vector([1.5, 9.547, 3.691])
+w3 = Vector([-6.007, 0.124, 5.772])
+
+print v1.crossProduct(w1)
+print v2.paralelogramArea(w2)
+print v3.triangleArea(w3)
+
