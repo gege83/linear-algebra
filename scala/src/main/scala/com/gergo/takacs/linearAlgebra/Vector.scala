@@ -1,27 +1,26 @@
 package com.gergo.takacs.linearAlgebra
 
-case class Vector(coords: Double*) {
+case class Vector(coordinates: List[Double]) {
 
-  if (coords.isEmpty) throw EmptyCollectionNotPermitted()
-  val coordinates: List[Double] = List[Double](coords: _*)
+  if (coordinates.isEmpty) throw EmptyCollectionNotPermitted()
 
-  def dimension(): Int = coords.length
+  def dimension(): Int = coordinates.length
 
   def add(vector: Vector): Vector = {
     val newCoordinates = (coordinates, vector.coordinates).zipped.map(_ + _)
-    Vector(newCoordinates: _*)
+    Vector(newCoordinates)
   }
 
   def sub(vector: Vector): Vector = {
     val newCoordinates = (coordinates, vector.coordinates).zipped.map(_ - _)
-    Vector(newCoordinates: _*)
+    Vector(newCoordinates)
   }
 
   def +(vector: Vector): Vector = add(vector)
 
   def -(vector: Vector): Vector = sub(vector)
 
-  def *(i: Double) = Vector(coordinates.map(_ * i): _*)
+  def *(i: Double) = Vector(coordinates.map(_ * i))
 
   def *:(i: Double): Vector = this * i
 
@@ -73,7 +72,7 @@ case class Vector(coords: Double*) {
   def crossProduct(vector: Vector): Vector = {
     val (x1, y1, z1) = createTuple(this)
     val (x2, y2, z2) = createTuple(vector)
-    Vector(y1 * z2 - y2 * z1, -(x1 * z2 - x2 * z1), x1 * y2 - x2 * y1)
+    Vector(y1 * z2 - y2 * z1, x2 * z1 - x1 * z2, x1 * y2 - x2 * y1)
   }
 
   private def createTuple(vector: Vector) = {
@@ -86,7 +85,9 @@ case class Vector(coords: Double*) {
 
   def parallelogramArea(vector: Vector): Double = this.crossProduct(vector).magnitude()
 
-  def triangleArea(vector: Vector): Double = parallelogramArea(vector)/2
+  def triangleArea(vector: Vector): Double = parallelogramArea(vector) / 2
 }
 
-
+object Vector {
+  def apply(first: Double, coordinates: Double*): Vector = Vector(first :: List[Double](coordinates: _*))
+}
